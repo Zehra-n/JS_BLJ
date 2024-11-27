@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Notfallkonsole</title>
+    <style>
+        #notfallkonsole {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        #antrieb, #holodeck, #hitzeschild, #transport {
+            display: inline-block;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .hover {
+            border-color: red;
+        }
+
+        .hover h2, .hover a {
+            color: red;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div id="notfallkonsole">
+    <div id="antrieb">
+        <h2>Antrieb</h2>
+        <a id="schalter-antrieb" href="#">Abschalten!</a>
+    </div>
+    <div id="holodeck">
+        <h2>Holodeck</h2>
+        <a id="schalter-holodeck" href="#">Abschalten!</a>
+    </div>
+    <div id="hitzeschild">
+        <h2>Hitzeschild</h2>
+        <a id="schalter-hitzeschild" href="#">Abschalten!</a>
+    </div>
+    <div id="transport">
+        <h2>Transport</h2>
+        <a id="schalter-transport" href="#">Abschalten!</a>
+    </div>
+</div>
+
+<script>
+    function initialize() {
+        const schalter = ["antrieb", "holodeck", "hitzeschild", "transport"];
+        for (let i = 0; i < schalter.length; i++) {
+            document.getElementById("schalter-" + schalter[i]).addEventListener("mouseover", hoverAn);
+            document.getElementById("schalter-" + schalter[i]).addEventListener("mouseout", hoverAb);
+        }
+    }
+
+    function hoverAn(e) {
+        e.target.parentElement.classList.add("hover");
+    }
+
+    function hoverAb(e) {
+        e.target.parentElement.classList.remove("hover");
+    }
+
+    window.addEventListener("load", initialize);
+</script>
+</body>
+</html>

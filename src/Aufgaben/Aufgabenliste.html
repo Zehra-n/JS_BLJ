@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aufgabenliste</title>
+    <style>
+
+        .erledigt {
+            text-decoration: line-through;
+        }
+
+        .offen {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Aufgabenliste</h1>
+
+<ul id="aufgaben">
+    <li class="offen">Aufgabe 1 <a href="#" onclick="markiereErledigt(this)">erledigt</a></li>
+    <li class="offen">Aufgabe 2 <a href="#" onclick="markiereErledigt(this)">erledigt</a></li>
+    <li class="offen">Aufgabe 3 <a href="#" onclick="markiereErledigt(this)">erledigt</a></li>
+</ul>
+
+<input type="text" id="myInputField" placeholder="Neue Aufgabe">
+<button onclick="hinzufuegenAufgabe()">Aufgabe hinzufügen</button>
+
+<button onclick="alleErledigen()">Alles erledigt!</button>
+
+<script>
+
+    function markiereErledigt(link) {
+
+        var li = link.parentElement;
+
+        if (li.classList.contains("offen")) {
+            li.classList.remove("offen");
+            li.classList.add("erledigt");
+        } else {
+            li.classList.remove("erledigt");
+            li.classList.add("offen");
+        }
+    }
+
+    function hinzufuegenAufgabe() {
+        var input = document.getElementById("myInputField");
+        var neuerAufgabentext = input.value.trim();
+
+        if (neuerAufgabentext !== "") {
+
+            var ul = document.getElementById("aufgaben");
+            var li = document.createElement("li");
+            li.classList.add("offen");
+
+            li.innerHTML = neuerAufgabentext + ' <a href="#" onclick="markiereErledigt(this)">erledigt</a>';
+
+            ul.appendChild(li);
+
+            input.value = "";
+        }
+    }
+
+    function alleErledigen() {
+        var aufgaben = document.querySelectorAll("#aufgaben li");
+        aufgaben.forEach(function(li) {
+            li.classList.remove("offen");
+            li.classList.add("erledigt");
+        });
+    }
+</script>
+</body>
+</html>

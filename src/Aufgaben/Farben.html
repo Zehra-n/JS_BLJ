@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farben ändern</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .color-picker {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+<h1>Farben ändern</h1>
+<div class="color-picker">
+  <label for="textColor">Schriftfarbe:</label>
+  <input type="color" id="textColor" value="#000000">
+</div>
+<div class="color-picker">
+  <label for="bgColor">Hintergrundfarbe:</label>
+  <input type="color" id="bgColor" value="#ffffff">
+</div>
+
+<script>
+
+  const textColorPicker = document.getElementById('textColor');
+  const bgColorPicker = document.getElementById('bgColor');
+
+  textColorPicker.addEventListener('input', () => {
+    document.body.style.color = textColorPicker.value;
+  });
+
+  bgColorPicker.addEventListener('input', () => {
+    document.body.style.backgroundColor = bgColorPicker.value;
+  });
+</script>
+</body>
+</html>

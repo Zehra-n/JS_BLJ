@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schachbrett</title>
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: repeat(8, 65px);
+            grid-template-rows: repeat(8, 65px);
+        }
+        .black {
+            background-color: #f86a6a;
+        }
+        .white {
+            background-color: #f0d9b5;
+        }
+    </style>
+</head>
+<body>
+<script>
+    function zeichneSchachbrett() {
+        let result = '';
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+
+                let colorClass = (row + col) % 2 === 0 ? 'white' : 'black';
+                result += `<div class="${colorClass}"></div>`;
+            }
+        }
+        document.body.innerHTML = result;
+    }
+
+    zeichneSchachbrett();
+</script>
+</body>
+</html>
