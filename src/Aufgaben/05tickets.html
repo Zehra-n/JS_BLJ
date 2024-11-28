@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Bestellung</title>
+</head>
+<body>
+<h1>Ticket Bestellung</h1>
+<form id="ticketForm" action="https://formlog.offline.ch/log" method="POST" target="_self">
+    <div>
+        <label for="email">E-Mail Adresse:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="tickets">Anzahl Tickets:</label>
+        <select id="tickets" name="tickets" required>
+            <option value="">Bitte wählen</option>
+            <option value="1">1 Ticket</option>
+            <option value="2">2 Tickets</option>
+        </select>
+    </div>
+    <div id="errorMessage" class="error"></div>
+    <button type="submit">Bestellen</button>
+</form>
+
+<script>
+    document.getElementById("ticketForm").addEventListener("submit", function (event) {
+        const errorMessage = document.getElementById("errorMessage");
+        errorMessage.textContent = "";
+
+        const email = document.getElementById("email").value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            errorMessage.textContent = "Bitte geben Sie eine gültige E-Mail Adresse ein.";
+            event.preventDefault();
+            return;
+        }
+
+        const tickets = document.getElementById("tickets").value;
+        if (!tickets) {
+            errorMessage.textContent = "Bitte wählen Sie aus, wieviele Tickets sie bestellen möchten.";
+            event.preventDefault();
+            return;
+        }
+    });
+</script>
+</body>
+</html>

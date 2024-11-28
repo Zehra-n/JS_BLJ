@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notizen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        input, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li button {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        li button:hover {
+            background-color: #c82333;
+        }
+
+        .timestamp {
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Notizen</h1>
+</header>
+
+<main>
+    <input type="text" id="note-input" placeholder="Gib deine Notiz ein" onkeydown="checkEnter(event)">
+    <button id="add-button" onclick="addNote()">Notiz hinzufügen</button>
+
+    <ul id="notes-list"></ul>
+
+    <div id="no-notes" style="display:none;">Keine Notizen vorhanden. Füge eine Notiz hinzu!</div>
+</main>
+
+<script>
+    window.onload = function() {
+        loadNotes();
+    };
+
+    function checkEnter(event) {
+        if (event.key === "Enter") {
+            addNote();
+        }
+    }
+
+    function addNote() {
+        const noteInput = document.getElementById('note-input');
+        const noteText = noteInput.value.trim();
+
+        if (noteText === '') {
+            alert('Bitte gib eine Notiz ein!');
+            return;
+        }
+
+        const timestamp = new Date().toLocaleString();
+        const note = {
+            text: noteText,
+            timestamp: timestamp
+        };
+
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+        notes.push(note);
+        localStorage.setItem('notes', JSON.stringify(notes));
+
+        noteInput.value = '';
+
+        loadNotes();
+    }
+
+    function loadNotes() {
+        const notesList = document.getElementById('notes-list');
+        notesList.innerHTML = '';
+
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+        if (notes.length === 0) {
+            document.getElementById('no-notes').style.display = 'block';
+        } else {
+            document.getElementById('no-notes').style.display = 'none';
+            notes.forEach((note, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                        <div>
+                            <strong>${note.text}</strong>
+                            <div class="timestamp">${note.timestamp}</div>
+                        </div>
+                        <button onclick="deleteNote(${index})">Löschen</button>
+                    `;
+                notesList.appendChild(li);
+            });
+        }
+    }
+    function deleteNote(index) {
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+        notes.splice(index, 1);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        loadNotes();
+    }
+</script>
+</body>
+</html>
