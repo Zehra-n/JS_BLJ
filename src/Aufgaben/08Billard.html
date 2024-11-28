@@ -1,24 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Kugel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewegende Kugel</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
 
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 <body>
-    <canvas id="myCanvas"></canvas>
+<canvas id="myCanvas"></canvas>
 
-    <script>
-        const canvas = document.getElementById("myCanvas");
-        const ctx = canvas.getContext("2d");
+<script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
 
-        const.width = window.innerWidth;
-        const.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-        const ballRadius = 20;
-        let x = Math.random()
-    </script>
+    const ballRadius = 20;
+    let x = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
+    let y = Math.random() * (canvas.height - 2 * ballRadius) + ballRadius;
+    let dx = (Math.random() - 0.5) * 4;
+    let dy = (Math.random() - 0.5) * 4;
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "blue";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function updateBallPosition() {
+        x += dx;
+        y += dy;
+
+        if (x + ballRadius > canvas.width || x - ballRadius < 0) {
+            dx = -dx;
+        }
+
+        if (y + ballRadius > canvas.height || y - ballRadius < 0) {
+            dy = -dy;
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBall();
+        updateBallPosition();
+    }
+
+    setInterval(draw);
+
+</script>
 </body>
 </html>
