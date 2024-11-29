@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medaillen</title>
+</head>
+<body>
+      <h1>Medaillen</h1>
+      <canvas id="cvs" height="200" width="300"></canvas>
+      <script>
+        window.onload = function() {
+
+          var canvas = document.getElementById("cvs");
+          var ctx = canvas.getContext("2d");
+
+          var medaillen = [
+            {color: "gold", count: 3},
+            {color: "silver", count: 2},
+            {color: "brown", count: 5}
+          ];
+
+          var barWidth = 40;
+          var maxBarHeight = 120;
+          var spacing = 20;
+          var startX = 30;
+          var maxCount = 5;
+
+          for (var i = 0; i < medaillen.length; i++) {
+            var barHeight = (medaillen[i].count / maxCount) * maxBarHeight;
+            var x = startX + i * (barWidth + spacing);
+            var y = canvas.height - barHeight -20;
+
+            ctx.fillStyle = medaillen[i].color;
+            ctx.fillRect(x, y, barWidth, barHeight);
+
+            ctx.fillStyle = "black";
+            ctx.font = "16px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText(medaillen[i].count, x + barWidth / 2, canvas.height - 5);
+          }
+        }
+      </script>
+
+</body>
+</html>

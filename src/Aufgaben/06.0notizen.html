@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Notizen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 100%;
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .note-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #noteText {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            height: 60px;
+            resize: vertical;
+        }
+
+        #addNote {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #addNote:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            padding-left: 0;
+            margin-top: 20px;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .note {
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            min-height: 60px;
+        }
+
+        .noteText {
+            font-size: 18px;
+            margin-bottom: 5px;
+            word-wrap: break-word;
+        }
+
+        .noteDate {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .delete {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete:hover {
+            background-color: #e60000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Meine Notizen</h1>
+    <div class="note-input">
+        <input type="text" placeholder="Neue Notiz" id="noteText">
+        <button id="addNote">Hinzufügen</button>
+    </div>
+    <ul id="noteList"></ul>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const noteInput = document.getElementById('noteText');
+        const addButton = document.getElementById('addNote');
+        const noteList = document.getElementById('noteList');
+
+        loadNotes();
+
+        function addNote() {
+            const noteText = noteInput.value.trim();
+
+            if (noteText === '') {
+                return;
+            }
+            const currentDate = new Date().toLocaleString();
+            const newNote = {text: noteText, date: currentDate};
+
+            addNoteToDOM(newNote);
+
+            saveNoteToStorage(newNote);
+
+            noteInput.value = '';
+        }
+
+        function addNoteToDOM(note) {
+            const li = document.createElement('li');
+            li.classList.add('note');
+            li.innerHTML = `
+                    <div class="noteText">${note.text}</div>
+                    <div class="noteDate">${note.date}</div>
+                    <button class="delete">Löschen</button>
+                `;
+
+            li.querySelector(".delete").addEventListener('click', function () {
+                deleteNote(note);
+                li.remove();
+            });
+
+            noteList.appendChild(li);
+        }
+
+        function loadNotes() {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.forEach((note) => addNoteToDOM(note));
+        }
+
+        function saveNoteToStorage(note) {
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.push(note);
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+
+        function deleteNote(noteToDelete) {
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes = notes.filter(note => note.text !== noteToDelete.text);
+            localStorage.setItem('notes', JSON.stringify(notes));
+        }
+
+        addButton.addEventListener('click', addNote);
+
+        noteInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                addNote();
+            }
+        });
+    });
+</script>
+</body>
+</html>

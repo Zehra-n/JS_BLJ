@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Zufallswitz</title>
+</head>
+<body>
+<div>
+  <button id="btn">Zufallswitz</button>
+  <p id="witz"></p>
+</div>
+<script>
+  window.onload = function() {
+    document.getElementById("btn").addEventListener("click", holeWitz);
+  }
+  async function holeWitz() {
+    try {
+      const response = await fetch("https://witzapi.de/api/joke/");
+
+      if (!response.ok) {
+        throw new Error("Fehler bei der Anfrage. Status: " + response.status);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      document.getElementById("witz").textContent = data.joke || "Kein Witz.";
+    } catch (error) {
+      document.getElementById("witz").textContent = "Fehler.";
+      console.error(error);
+    }
+  }
+</script>
+</body>
+</html>
