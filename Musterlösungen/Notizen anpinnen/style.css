@@ -1,0 +1,74 @@
+
+body {
+    padding: 100px 0;
+}
+
+#header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 30px);
+    background-color:rgba(92, 170, 253, 0.9);
+    padding: 15px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(44,62,80,0.15);
+}
+
+input, button {
+    border: none;
+}
+
+input {
+    height: 40px;
+    width: calc(100% - 20px); 
+    background-color:rgba(165, 207, 253, 0.9);
+    color: white;
+    font-size: 1.1em;
+    text-indent: 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+button {
+    position: absolute;
+    right: 15px;
+    top: 14px;
+    height: 44px;
+    width: 44px;
+    margin-left:2px;
+    font-size: 1.5em;
+    color: green;
+    border-radius: 50px;
+ }
+
+#cards {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1em;
+}
+
+.card {
+    margin: 5px;
+    padding: 5px;
+    background-color: rgb(255, 250, 180);
+    width: 255px;
+    height: 200px;
+    overflow: auto;
+    box-shadow: 4px 4px 4px rgba(44,62,80,0.15);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.5em;
+}
+
+.card-title img {
+    height: 16px;
+    width: auto;
+    max-width: 100%;
+}

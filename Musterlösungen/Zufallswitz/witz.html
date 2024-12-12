@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Witze</title>
+</head>  
+<body>
+   <div>
+      <button id="btn">Zufallswitz holen</button>
+      <p id="witz"></p>
+   </div>
+
+   <script>
+      window.onload = function() {  
+         document.getElementById("btn").addEventListener("click", holeWitz);
+        // document.getElementById("btn").addEventListener("click", holeWitz2);
+      }
+
+      /*
+         Variante 1: async und await -> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+      */
+      async function holeWitz() {
+         var response = await fetch("https://witzapi.de/api/joke/", { "method": "GET" });
+         var data = await response.json();
+         document.getElementById("witz").innerText = data[0].text;   
+      }
+      /*    
+       Variante 2: Promise Chains  -> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+      */
+      function holeWitz2() {
+         fetch("https://witzapi.de/api/joke/", { "method" : "GET" }) //fetch() gibt ein Promise zurück -> https://developer.mozilla.org/en-US/docs/Web/API/fetch
+             .then(
+               function(response) { return response.json(); }           //json() gibt ein Promise zurück -> https://developer.mozilla.org/en-US/docs/Web/API/Response/json 
+            )
+            .then(
+               function(data) { document.getElementById("witz").innerText = data[0].text; } 
+            )
+            .catch(
+               function(error) { console.log(error); }   //generischer error-handler, falls während der Verarbeitungskette irgendwo ein Fehler geworfen wird.
+            )
+      }   
+   </script>
+</body>
+</html>

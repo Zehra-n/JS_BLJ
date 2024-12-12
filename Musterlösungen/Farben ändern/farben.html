@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Farben ändern</title>
+    <style>
+        label {
+            display: inline-block;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Farben ändern</h1>
+    <div>
+        <label for="bg-picker">Hintergrundfarbe</label>
+        <input id="bg-picker" type="color">
+    </div>
+    <div>
+        <label for="font-picker">Schriftfarbe</label>
+        <input id="font-picker" type="color">
+    </div>
+
+    <script>
+        window.onload = function() {  
+            document.getElementById("bg-picker").addEventListener("input", changeBgColor);
+            document.getElementById("font-picker").addEventListener("input", changeFontColor);
+        }
+
+        function changeBgColor() {
+            document.body.style.backgroundColor = document.getElementById("bg-picker").value;
+        }
+
+        function changeFontColor() {
+            document.body.style.color = document.getElementById("font-picker").value;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+body {
+    background-color: black;
+    font-family:Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+h2 {
+    font-size: 1.1em;
+    margin: 0 0 40px 0;
+}
+
+div {
+    border: 4px solid white;
+}
+a, a:visited {
+    color:white;
+    text-decoration: none;
+}
+
+#konsole {
+    border: none;
+}
+
+#konsole div {
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 40px;
+}
+
+.hover {
+    border: 4px solid red;
+}

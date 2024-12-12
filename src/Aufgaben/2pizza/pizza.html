@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pizza Zutaten</title>
+	<style>
+		#container {
+			display: flex;
+		}
+		#container div {
+			margin: 20px;
+		}
+		select {
+			width: 150px;
+			height: 180px;
+		}
+		button {
+			display: block;
+			margin: 10px 0;
+			height: 30px;
+			width: 120px;
+		}
+	</style>
+</head>
+<body>
+<h1>Welche Zutaten möchtest du auf deiner Pizza haben?</h1>
+<div id="container">
+	<div>
+		<select id="ingredients" size="8">
+			<option>Pilze</option>
+			<option>Schinken</option>
+			<option>Salami</option>
+			<option>Ananas</option>
+			<option>Spinat</option>
+			<option>Extra Käse</option>
+			<option>Zwiebeln</option>
+			<option>Speck</option>
+		</select>
+	</div>
+	<div>
+		<button id="add">Hinzufügen &gt;&gt;</button>
+		<button id="remove">&lt;&lt; Entfernen</button>
+	</div>
+	<div>
+		<select id="choice" size="8"></select>
+	</div>
+</div>
+
+<script>
+	window.addEventListener("load", initialize);
+
+	function initialize() {
+		document.getElementById("add").addEventListener("click", add);
+		document.getElementById("remove").addEventListener("click", remove);
+	}
+
+	function add() {
+		var ingredients = document.getElementById("ingredients");
+		var choice = document.getElementById("choice");
+
+		if (ingredients.selectedIndex > -1) {
+			var selectedOption = ingredients.options[ingredients.selectedIndex];
+			var newOption = selectedOption.cloneNode(true);
+			choice.appendChild(newOption);
+			ingredients.removeChild(selectedOption);
+		}
+	}
+
+	function remove() {
+		var ingredients = document.getElementById("ingredients");
+		var choice = document.getElementById("choice");
+
+		if (choice.selectedIndex > -1) {
+			var selectedOption = choice.options[choice.selectedIndex];
+			var newOption = selectedOption.cloneNode(true);
+			ingredients.appendChild(newOption);
+			choice.removeChild(selectedOption);
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewegende Kugel</title>
+    <style>
+        /* CSS für das Canvas */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+
+    <script>
+        // Canvas und Kontext holen
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Canvas auf die Größe des Browserfensters setzen
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Kugel-Eigenschaften
+        const ballRadius = 20;
+        let x = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius; // Zufällige Startposition
+        let y = Math.random() * (canvas.height - 2 * ballRadius) + ballRadius; // Zufällige Startposition
+        let dx = (Math.random() - 0.5) * 4; // Zufällige Bewegung in x-Richtung
+        let dy = (Math.random() - 0.5) * 4; // Zufällige Bewegung in y-Richtung
+
+        // Funktion zum Zeichnen der Kugel
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Funktion zum Aktualisieren der Kugelposition
+        function updateBallPosition() {
+            // Ball bewegen
+            x += dx;
+            y += dy;
+
+            // Wenn der Ball den rechten oder linken Rand erreicht
+            if (x + ballRadius > canvas.width || x - ballRadius < 0) {
+                dx = -dx; // Richtung umkehren
+            }
+
+            // Wenn der Ball den oberen oder unteren Rand erreicht
+            if (y + ballRadius > canvas.height || y - ballRadius < 0) {
+                dy = -dy; // Richtung umkehren
+            }
+        }
+
+        // Funktion zum Zeichnen des gesamten Frames
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
+            drawBall(); // Kugel zeichnen
+            updateBallPosition(); // Kugelposition aktualisieren
+        }
+
+        // Wiederhole die Funktion alle 50 Millisekunden
+        setInterval(draw, 50);
+
+    </script>
+</body>
+</html>

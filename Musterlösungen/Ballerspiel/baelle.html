@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DOM</title>
+</head>
+<body>
+	<h1 id="ueberschrift">Bälle abschiessen</h1>
+	<p>Klicke auf einen Ball, um ihn abzuschiessen.</p>
+	<img src="ball.png" id="ball1" />
+	<img src="ball.png" id="ball2" />
+	<img src="ball.png" id="ball3" />
+	<img src="ball.png" id="ball4" />
+
+	<script>
+		window.addEventListener("load", initialize);
+
+	 	function initialize() {
+			var baelle = document.getElementsByTagName("img");
+			for (var i = 0; i < baelle.length; i++) {
+				baelle[i].addEventListener("click", wechsleBild)
+			}
+		}
+
+		function wechsleBild(e) {
+			var bild = e.target;
+			if (bild.src.indexOf("ball.png") > -1) {
+				bild.src = "kreuz.png";
+			} else if(bild.src.indexOf("kreuz.png") > - 1) {
+				bild.parentNode.removeChild(bild);
+			
+				if (document.getElementsByTagName("img").length === 0) {
+					var p = document.createElement("p");
+					p.innerHTML ="<strong>GAME OVER</strong>"
+					p.setAttribute("style", "color:red;");
+					document.getElementsByTagName("body")[0].appendChild(p);
+				}
+			}
+		}
+
+	</script>
+</body>
+</html>
+

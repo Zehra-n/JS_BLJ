@@ -1,0 +1,20 @@
+div {
+    width: 65px;
+    height: 65px;
+    margin: 0;
+    /* border: 1px solid black;*/
+    padding: 0;
+    float: left;
+}
+
+.new-line {
+    clear: left;
+}
+
+.black {
+    background-color: #b58863;
+}
+
+.white {
+    background-color: #f0d9b5;
+}

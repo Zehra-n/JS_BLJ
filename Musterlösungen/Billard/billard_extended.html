@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billard</title>
+     <style>
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: blanchedalmond;  
+            z-index: -1;  
+         }
+         button {
+            height: 40px;
+            width: 100px;
+         }
+    </style>
+</head>
+<body>
+    <button id="start">neue Kugel</button>&nbsp;<span id="anzahl"></span>
+    <canvas id="leinwand"></canvas>
+
+    <script>
+        var canvas;
+        var ctx; 
+        var r = 25; 
+        var speedX;
+        var speedY;
+        var interval;
+        var balls = [];
+
+        window.onload = function() {
+            canvas = document.getElementById("leinwand");  
+            ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            document.getElementById("start").addEventListener("click", newBall);
+        }
+
+        function newBall() {
+            if (interval != null)
+                clearInterval(interval);
+    
+            var ball = {};
+            ball.X = getRandomInteger(r, canvas.width - r);; 
+            ball.Y = getRandomInteger(r, canvas.height - r);;
+            ball.SpeedX = getRandomDigit() + 15;
+            ball.SpeedY = getRandomDigit() + 15;
+            balls.push(ball);
+
+            if (getRandomDigit() < 5)
+                ball.SpeedX = -ball.SpeedX;
+            if (getRandomDigit() < 5) 
+                ball.SpeedY = -ball.SpeedX;
+
+            interval = setInterval(drawCircle, 50);
+            document.getElementById("anzahl").innerText = balls.length + " Kugel(n)"
+        }
+
+        function drawCircle() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (var i = 0; i < balls.length; i++) {
+                ctx.beginPath();
+                ctx.fillStyle = "#fff";
+                ctx.arc(balls[i].X, balls[i].Y, r, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+                ctx.closePath();
+
+                balls[i].X += balls[i].SpeedX;
+                balls[i].Y += balls[i].SpeedY;
+           
+                if (balls[i].X  + r > canvas.width || balls[i].X - r < 0) {
+                    balls[i].SpeedX = -balls[i].SpeedX;
+                    console.log("reached x boundary");
+                }
+                if (balls[i].Y  + r > canvas.height || balls[i].Y - r < 0) {
+                    balls[i].SpeedY = -balls[i].SpeedY;
+                    console.log("reached y boundary");
+                }
+            }
+        }
+ 
+        function getRandomDigit() {
+            return Math.floor(Math.random() * 10); //returns a random integer from 0 to 9
+        }
+
+
+        function getRandomInteger (min, max) {
+	        return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+    </script>
+</body>
+</html>

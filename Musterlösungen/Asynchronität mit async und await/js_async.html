@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>test</title>
+</head>  
+<body>
+   <button id ="btn">Klick</button>
+
+   <p id="out"></p>
+
+   <script>
+      window.onload = function() {  
+         start();
+      }
+      
+      function start() {
+         console.log("begin of start()")
+         test();
+         //test2();
+         console.log("end of start()");
+      }
+
+      async function test() {
+         console.log("begin of test()");
+         var result = await doSomething();
+         console.log(result);       
+         console.log("end of test()");
+      } 
+      
+      async function test2() {
+         console.log("begin of test2()")
+         doSomething().then(
+            function(result) { console.log(result); }
+         )   
+         console.log("end of test2()");
+      } 
+
+      function doSomething() {
+         return Promise.resolve("result of doSomething");
+      }
+   </script>
+</body>
+</html>

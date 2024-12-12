@@ -1,0 +1,38 @@
+#container {
+    margin: 0 auto; 
+    width: 426px;
+    display: flex;
+    flex-direction: column;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: 140px 140px 140px;
+    grid-template-rows: 140px 140px 140px;
+    grid-gap: 3px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.tile {
+    background-color: rgb(182, 242, 209);
+}
+
+.tile img {
+    max-width: 100%;
+    height: 137px;
+}
+
+#won-message {
+    color: black;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#new-game {
+    color: blue;
+    font-size: 1.2em;
+}
+
